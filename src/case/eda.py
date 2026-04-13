@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import argparse
 from pathlib import Path
 
@@ -50,14 +48,14 @@ def add_features(df: pd.DataFrame, q_low: float, q_high: float) -> pd.DataFrame:
     return out
 
 
-def save_figure(fig: plt.Figure, path: Path, show: bool) -> None:
+def save_figure(fig: plt.Figure, path: Path) -> None:
     """util til at gemme figur"""
     fig.tight_layout()
     fig.savefig(path, dpi=150)
     plt.close(fig)
 
 
-def plot_price_series(df: pd.DataFrame, out_dir: Path, show: bool) -> None:
+def plot_price_series(df: pd.DataFrame, out_dir: Path) -> None:
     """Plotter en simpel tidsserie for spot og intraday priser"""
     fig, ax = plt.subplots(figsize=(14, 5))
     for col in PRICE_COLS:
@@ -65,10 +63,10 @@ def plot_price_series(df: pd.DataFrame, out_dir: Path, show: bool) -> None:
     ax.set_title("Market Price Time Series")
     ax.set_ylabel("EUR/MWh")
     ax.legend()
-    save_figure(fig, out_dir / "price_time_series.png", show)
+    save_figure(fig, out_dir / "price_time_series.png")
 
 
-def plot_ratio_distribution(df: pd.DataFrame, q_low: float, q_high: float, out_dir: Path, show: bool) -> None:
+def plot_ratio_distribution(df: pd.DataFrame, q_low: float, q_high: float, out_dir: Path) -> None:
     """Plotter distributionen af ratio_wind men linjer for q_low og q_high"""
     vals = df["ratio_wind_to_load"].dropna()
 
@@ -80,10 +78,10 @@ def plot_ratio_distribution(df: pd.DataFrame, q_low: float, q_high: float, out_d
     ax.set_xlabel("ratio_wind_to_load")
     ax.set_ylabel("Count")
     ax.legend()
-    save_figure(fig, out_dir / "ratio_distribution.png", show)
+    save_figure(fig, out_dir / "ratio_distribution.png")
 
 
-def plot_spread_box_by_regime(df: pd.DataFrame, out_dir: Path, show: bool) -> None:
+def plot_spread_box_by_regime(df: pd.DataFrame, out_dir: Path) -> None:
     """Box plot af spreads opdelt på vind"""
     regimes = ["scarcity_low_wind", "neutral", "surplus_high_wind"]
     fig, axes = plt.subplots(1, 3, figsize=(18, 5), sharey=False)
@@ -97,13 +95,13 @@ def plot_spread_box_by_regime(df: pd.DataFrame, out_dir: Path, show: bool) -> No
         ax.tick_params(axis="x", rotation=20)
         ax.grid(alpha=0.2)
 
-    save_figure(fig, out_dir / "spread_boxplots_by_regime.png", show)
+    save_figure(fig, out_dir / "spread_boxplots_by_regime.png")
 
 
 
 
 
-def run_eda(input_path: str, output_dir: str, q_low: float, q_high: float, show: bool) -> None:
+def run_eda(input_path: str, output_dir: str, q_low: float, q_high: float) -> None:
     """Kører hele EDA pipeline"""
     out_dir = Path(output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -111,9 +109,9 @@ def run_eda(input_path: str, output_dir: str, q_low: float, q_high: float, show:
     df_raw = load_data(input_path)
     df = add_features(df_raw, q_low=q_low, q_high=q_high)
 
-    plot_price_series(df, out_dir, show)
-    plot_ratio_distribution(df, q_low=q_low, q_high=q_high, out_dir=out_dir, show=show)
-    plot_spread_box_by_regime(df, out_dir, show)
+    plot_price_series(df, out_dir)
+    plot_ratio_distribution(df, q_low=q_low, q_high=q_high, out_dir=out_dir)
+    plot_spread_box_by_regime(df, out_dir)
 
 
 
@@ -137,6 +135,5 @@ if __name__ == "__main__":
         input_path=args.input,
         output_dir=args.output_dir,
         q_low=args.q_low,
-        q_high=args.q_high,
-        show=args.show,
+        q_high=args.q_high
     )

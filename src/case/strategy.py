@@ -1,7 +1,5 @@
 import numpy as np
 import pandas as pd
-import itertools
-from tqdm import tqdm
 
 
 SIGNAL_Q_LOW = 0.10 
