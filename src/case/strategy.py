@@ -6,7 +6,6 @@ from tqdm import tqdm
 
 SIGNAL_Q_LOW = 0.10 
 SIGNAL_Q_HIGH = 0.85
-LOOKBACK_HOURS = 24 * 7
 
 # load og prep data, beregn ratio, apply market stage
 def load_and_prep_data(filepath: str = "assets/data.csv") -> pd.DataFrame:
