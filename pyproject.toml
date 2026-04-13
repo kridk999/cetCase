@@ -18,10 +18,12 @@ classifiers = [
 readme = "README.md"
 requires-python = ">3.12"
 dependencies = [
+    "matplotlib>=3.10.8",
     "numpy==2.4.2",
     "pandas>=3.0.2",
     "torch>=2.5.1",
     "torchvision>=0.20.0",
+    "tqdm>=4.67.3",
 ]
 
 [dependency-groups]
