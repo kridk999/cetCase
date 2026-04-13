@@ -93,6 +93,8 @@ def execute_multi_leg_strategy(df):
                 "realized_pnl_net": pnl_gross 
             })
 
+            break # Kun én MwH per time 
+
 
     trades_df = pd.DataFrame(trade_records)
     
