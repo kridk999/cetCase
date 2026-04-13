@@ -19,17 +19,6 @@ def load_and_prep_data(filepath: str = "assets/data.csv") -> pd.DataFrame:
         df["wind_forecast_dah_mw"] / df["consumption_forecast_dah_mw"]
     )
 
-    def assign_market_stage(row):
-        if pd.notna(row["intraday3"]) and pd.notna(row["intraday2"]):
-            return "INTRADAY2"   # kan trade intraday2 -> intraday3
-        if pd.notna(row["intraday2"]) and pd.notna(row["intraday1"]):
-            return "INTRADAY1"   # kan trade intraday1 -> intraday2
-        if pd.notna(row["intraday1"]) and pd.notna(row["spot"]):
-            return "SPOT"        # kan trade spot -> intraday1
-        return "NO_TRADE"
-
-    df["market_stage"] = df.apply(assign_market_stage, axis=1)
-
     return df
 
 
