@@ -7,3 +7,4 @@ DATA ANALYSIS:
 ADDITIONAL DATA:
     * real-time data would be needed in order to transition into a strategy, then a stop-loss could also be introduced
     * Relying on wind forecasts and consumptions forecasts do not paint the whole picture, getting a more accurate picture on actual wind and solar output would be necessary
+    * Grid congestion data (especially across different countries) would also help the strategy, as grid congestions can affect the price drastically.
