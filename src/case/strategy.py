@@ -61,14 +61,17 @@ def execute_multi_leg_strategy(df):
         potential_legs = []
         
 
-        if 1 <= hour <= 24:
+        if 1 <= hour <= 12:
             potential_legs.append(("spot", "intraday1", "SPOT_TO_ID1"))
             
-        if 13 <= hour <= 24:
+        elif 13 <= hour <= 18:
             potential_legs.append(("intraday1", "intraday2", "ID1_TO_ID2"))
             
-        if 19 <= hour <= 24:
+        elif 19 <= hour <= 24:
             potential_legs.append(("intraday2", "intraday3", "ID2_TO_ID3"))
+        
+        else:
+            continue
 
         for entry_col, exit_col, leg_name in potential_legs:
             entry_px = row.get(entry_col, np.nan)
